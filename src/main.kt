@@ -1,11 +1,8 @@
 import automata.CellularAutomata
 import automata.PrimitiveCellularAutomata
-import automata.Rule
 import java.io.File
-import java.io.FileOutputStream
 
 const val seed = 1622454244341
-
 
 fun spiralOrder(a: Array<IntArray>): ArrayList<Int> {
     var i: Int
@@ -137,8 +134,8 @@ fun primitive() {
     }
 }
 
-fun basicVar(a1: CellularAutomata, a2: CellularAutomata) {
-    File("results/${a1.rule.getNumber()}_${a2.rule.getNumber()}.out").printWriter().use { out ->
+fun basicVar(a1: CellularAutomata, a2: CellularAutomata, length: Int = 41) {
+    File("results/length/${a1.rule.getNumber()}_${a2.rule.getNumber()}.out${length}").printWriter().use { out ->
         a1.curr = 100
         a2.curr = 100
         for (i in 1..31250) {
@@ -219,40 +216,23 @@ fun main() {
             225,
         )
 
-    println("let's go")
+    val lengthArray = intArrayOf(8, 17, 32, 64)
 
-    var i1 = 1
-    var i2 = 1
-    var i3 = 1
-    var i4 = 1
-
-    val list = File("./results").list()!!
-
-    var i = 0
-    while(i != list.size){
-        var file = File("./results/${list[i]}")
-        file.copyTo(File("1/${i1++}"))
-        FileOutputStream(File("1/info.txt"), true).bufferedWriter().use { writer ->
-            writer.write("${list[i++]}\n")
-        }
-
-        file = File("./results/${list[i]}")
-        file.copyTo(File("2/${i2++}"))
-        FileOutputStream(File("2/info.txt"), true).bufferedWriter().use { writer ->
-            writer.write("${list[i++]}\n")
-        }
-
-        file = File("./results/${list[i]}")
-        file.copyTo(File("3/${i3++}"))
-        FileOutputStream(File("3/info.txt"), true).bufferedWriter().use { writer ->
-            writer.write("${list[i++]}\n")
-        }
-
-        file = File("./results/${list[i]}")
-        file.copyTo(File("4/${i4++}"))
-        FileOutputStream(File("4/info.txt"), true).bufferedWriter().use { writer ->
-            writer.write("${list[i++]}\n")
-        }
+    for (length in lengthArray) {
+        val r30 = CellularAutomata(seed, 30, length)
+        val r75 = CellularAutomata(seed, 75, length)
+        val r86 = CellularAutomata(seed, 86, length)
+        val r89 = CellularAutomata(seed, 89, length)
+        val r135 = CellularAutomata(seed, 135, length)
+        val r149 = CellularAutomata(seed, 149, length)
+        val r150 = CellularAutomata(seed, 150, length)
+        val r169 = CellularAutomata(seed, 169, length)
+        Thread.sleep(2000)
+        basicVar(r75, r89, length)
+        basicVar(r30, r149, length)
+        basicVar(r89, r135, length)
+        basicVar(r150, r169, length)
+        basicVar(r86, r150, length)
     }
 }
 

@@ -10,7 +10,7 @@ class CellularAutomata(seedNumber: Long, public val ruleNumber: Int, public val 
     init {
         arrayOfLines.add(seedNumber.toString(2).toCharArray().map { it.code - '0'.code }.take(length).toIntArray())
         Thread {
-            for (i in 1..65536) {
+            for (i in 1..1_001_000) {
                 val temp = nextLine()
                 arrayOfLines.add(temp)
             }
